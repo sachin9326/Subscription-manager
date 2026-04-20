@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Moon, Sun, LogOut, Check, X, AlertTriangle, User, Search, 
-  Plus, Calendar, Settings, Activity, Target, ShieldAlert,
+  Plus, Calendar, Settings, Activity, ShieldAlert,
   Edit2, XCircle, LayoutDashboard, DownloadCloud, UploadCloud, Trash2,
   Filter
 } from 'lucide-react';
@@ -74,6 +74,57 @@ const GlobalStyles = () => (
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
   `}</style>
 );
+
+// --- LOGO COMPONENT ---
+const Logo = ({ className = "w-12 h-12" }) => (
+  <motion.div 
+    className={`${className} relative flex items-center justify-center`}
+    initial={{ scale: 0.8, rotate: -10 }}
+    animate={{ scale: 1, rotate: 0 }}
+    transition={{ duration: 1, ease: "easeOut" }}
+  >
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-[0_0_12px_var(--accent-1)]">
+      <defs>
+        <linearGradient id="logoGradient" x1="0" y1="0" x2="64" y2="64">
+          <stop offset="0%" stopColor="var(--accent-1)" />
+          <stop offset="100%" stopColor="var(--accent-2)" />
+        </linearGradient>
+        <filter id="logoGlow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+      <motion.circle 
+        cx="32" cy="32" r="18" 
+        fill="url(#logoGradient)"
+        filter="url(#logoGlow)"
+        animate={{ 
+          filter: ["brightness(1) contrast(1.2)", "brightness(1.4) contrast(1.5)", "brightness(1) contrast(1.2)"] 
+        }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.ellipse 
+        cx="32" cy="32" rx="28" ry="7" 
+        stroke="white" strokeWidth="2" strokeOpacity="0.5" 
+        animate={{ rotate: 360 }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        style={{ transformOrigin: 'center' }}
+      />
+      <motion.circle 
+        cx="32" cy="32" r="3" 
+        fill="white"
+        animate={{ 
+          x: [20, -20, 20],
+          y: [-5, 5, -5],
+          scale: [0.7, 1.3, 0.7],
+          opacity: [0.2, 0.8, 0.2]
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </svg>
+  </motion.div>
+);
+
 
 // --- BACKGROUNDS ---
 const StarField = ({ isDark }) => {
@@ -280,7 +331,7 @@ const AuthScreen = ({ onLogin, isDark, setIsDark }) => {
          {isDark ? <Sun className="text-[var(--accent-1)]" /> : <Moon className="text-[var(--accent-2)]" />}
       </div>
       <div className="text-center mb-8">
-        <Target className="w-12 h-12 mx-auto mb-4 text-[var(--accent-1)] animate-pulse" />
+        <Logo className="w-20 h-20 mx-auto mb-4" />
         <h1 className="text-3xl font-heading font-bold text-gradient">ORBITPAY V2</h1>
         <p className="text-[var(--text-muted)] mt-2 text-sm">Mission Control for Subscriptions</p>
       </div>
@@ -333,7 +384,7 @@ const Header = ({ user, isDark, setIsDark, onLogout, activeTab, setActiveTab }) 
     <header className="sticky top-0 z-40 bg-[var(--nav-bg)] backdrop-blur-md border-b border-[var(--card-border)] shadow-sm px-4 lg:px-8 py-3">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-3">
-          <Target className="text-[var(--accent-1)] w-8 h-8" />
+          <Logo className="w-10 h-10" />
           <h1 className="text-xl font-heading font-bold text-gradient">ORBITPAY</h1>
         </div>
 
